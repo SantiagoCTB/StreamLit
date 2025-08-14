@@ -44,7 +44,6 @@ plt.title("Cantidad de registros por categoría")
 plt.xlabel("Categoría")
 plt.ylabel("Frecuencia")
 plt.tight_layout()
-plt.savefig("grafico_barras.png")
 plt.show()
 
 # -------------------------------
@@ -57,5 +56,4 @@ plt.xlabel("Fecha")
 plt.ylabel("Valor")
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("grafico_lineas.png")
 plt.show()
