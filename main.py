@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit as st
 
 # -------------------------------
 # 1. Generar datos aleatorios
@@ -18,42 +19,46 @@ df = pd.DataFrame({
 # -------------------------------
 # 2. Análisis exploratorio básico
 # -------------------------------
-print("=== Vista previa de los datos ===")
-print(df.head())
+st.title("Análisis Exploratorio de Datos")
 
-print("\n=== Información general ===")
-print(df.info())
+st.subheader("Vista previa de los datos")
+st.write(df.head())
 
-print("\n=== Estadísticas descriptivas ===")
-print(df.describe())
+st.subheader("Información general")
+buffer = []
+df.info(buf=buffer)
+info_str = "\n".join(buffer)
+st.text(info_str)
 
-print("\n=== Conteo por categoría ===")
-print(df["Categoria"].value_counts())
+st.subheader("Estadísticas descriptivas")
+st.write(df.describe())
 
-print("\n=== Valores nulos ===")
-print(df.isnull().sum())
+st.subheader("Conteo por categoría")
+st.write(df["Categoria"].value_counts())
+
+st.subheader("Valores nulos")
+st.write(df.isnull().sum())
 
 # -------------------------------
 # 3. Visualización - Gráfico de Barras
 # -------------------------------
+st.subheader("Cantidad de registros por categoría")
 conteo_cat = df["Categoria"].value_counts()
-
-plt.figure(figsize=(6,4))
-conteo_cat.plot(kind="bar", color="skyblue", edgecolor="black")
-plt.title("Cantidad de registros por categoría")
-plt.xlabel("Categoría")
-plt.ylabel("Frecuencia")
-plt.tight_layout()
-plt.show()
+fig1, ax1 = plt.subplots(figsize=(6,4))
+conteo_cat.plot(kind="bar", color="skyblue", edgecolor="black", ax=ax1)
+ax1.set_title("Cantidad de registros por categoría")
+ax1.set_xlabel("Categoría")
+ax1.set_ylabel("Frecuencia")
+st.pyplot(fig1)
 
 # -------------------------------
 # 4. Visualización - Gráfico de Líneas
 # -------------------------------
-plt.figure(figsize=(8,5))
-plt.plot(df["Fecha"], df["Valor"], marker="o", linestyle="-", color="orange")
-plt.title("Evolución de Valor en el tiempo")
-plt.xlabel("Fecha")
-plt.ylabel("Valor")
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+st.subheader("Evolución de Valor en el tiempo")
+fig2, ax2 = plt.subplots(figsize=(8,5))
+ax2.plot(df["Fecha"], df["Valor"], marker="o", linestyle="-", color="orange")
+ax2.set_title("Evolución de Valor en el tiempo")
+ax2.set_xlabel("Fecha")
+ax2.set_ylabel("Valor")
+ax2.grid(True)
+st.pyplot(fig2)
